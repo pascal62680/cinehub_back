@@ -6,6 +6,7 @@ import filmsRoutes from "./Routes/films.route.js";
 import roomsRoutes from "./Routes/rooms.route.js";
 import screeningsRoutes from "./Routes/screenings.route.js";
 import reservationsRoutes from "./Routes/reservations.route.js";
+import usersRoutes from "./Routes/users.route.js";
 
 
 
@@ -17,7 +18,7 @@ app.use("/rooms", checkToken, roomsRoutes);
 app.use("/films", checkToken, filmsRoutes);
 app.use("/reservations", checkToken, reservationsRoutes);
 app.use("/screenings", checkToken, screeningsRoutes);
-
+app.use("/users", checkToken, usersRoutes);
 app.get("/", (req, res) => {
     res.json({ status: "OK" });
 });
