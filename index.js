@@ -5,6 +5,8 @@ import checkToken from "./Middlewares/auth.middleware.js";
 import filmsRoutes from "./Routes/films.route.js";
 import roomsRoutes from "./Routes/rooms.route.js";
 import screeningsRoutes from "./Routes/screenings.route.js";
+import reservationsRoutes from "./Routes/reservations.route.js";
+
 
 
 const app = express();
@@ -13,8 +15,8 @@ app.use(express.json());
 app.use("/auth", authRoutes);
 app.use("/rooms", checkToken, roomsRoutes);
 app.use("/films", checkToken, filmsRoutes);
+app.use("/reservations", checkToken, reservationsRoutes);
 app.use("/screenings", checkToken, screeningsRoutes);
-
 
 app.get("/", (req, res) => {
     res.json({ status: "OK" });
