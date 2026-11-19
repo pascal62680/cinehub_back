@@ -51,6 +51,15 @@ async function remove(id) {
     const [result] = await db.query("DELETE FROM users WHERE us_id = ?", [id]);
     return result;
 }
+// Changer le rôle d'un utilisateur (admin uniquement)
+async function updateRole(id, role) {
+    const [result] = await db.query("UPDATE users SET us_role = ? WHERE us_id = ?", [role, id]);
+    return result;
+}
+
+
+
+
 
 export default {
     insert,
@@ -58,5 +67,6 @@ export default {
     getAll,
     getById,
     update,
-    remove
+    remove,
+    updateRole
 };

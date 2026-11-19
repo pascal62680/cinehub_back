@@ -7,6 +7,7 @@ const router = express.Router();
 router.get("/", checkAdmin, usersController.getAll);
 router.get("/me", usersController.getMe);
 router.get("/:id", usersController.getById);
+router.patch("/:id/role", checkAdmin, usersController.updateRole);
 router.patch("/:id", usersController.update);
 router.delete("/:id", checkAdmin, usersController.remove);
 

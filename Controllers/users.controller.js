@@ -93,11 +93,38 @@ async function remove(req, res) {
         res.status(500).json({ error: "Erreur lors de la suppression de l'utilisateur" });
     }
 }
+// Changer le rôle d'un utilisateur (admin)
+async function updateRole(req, res) {
+    try {
+        const role = (req.body || {}).role;
+
+        if (role !== "user" && role !== "admin") {
+            return res.status(403).json({ error: "role doit valoir 'user' ou 'admin'" });
+        }
+
+        const user = await usersModel.getById(req.params.id);
+
+        if (!user) {
+            return res.status(404).json({ error: "Utilisateur introuvable" });
+        }
+
+        await usersModel.updateRole(req.params.id, role);
+        const updated = await usersModel.getById(req.params.id);
+
+        res.json({ message: "Rôle modifié", user: updated });
+    } catch (error) {
+        res.status(500).json({ error: "Erreur lors de la modification du rôle" });
+    }
+}
+
+
+
 
 export default {
     getAll,
     getMe,
     getById,
     update,
-    remove
+    remove,
+    updateRole
 };
