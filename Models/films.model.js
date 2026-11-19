@@ -52,6 +52,12 @@ async function remove(id) {
     return result;
 }
 
+// Soft delete : retirer un film de l'affiche sans l'effacer
+async function hide(id) {
+    const [result] = await db.query("UPDATE films SET fi_is_showing = 0 WHERE fi_id = ?", [id]);
+    return result;
+}
+
 
 
 
@@ -66,6 +72,7 @@ export default {
     getUpcomingScreenings,
     insert,
     update,
-    remove
+    remove,
+    hide
 };
 

@@ -86,8 +86,9 @@ async function remove(req, res) {
             return res.status(404).json({ error: "Film introuvable" });
         }
 
-        await filmsModel.remove(id);
-        res.json({ message: "Film supprimé" });
+        await filmsModel.hide(id);
+        res.json({ message: "Film retiré de l'affiche" });
+
     } catch (error) {
         res.status(500).json({ error: "Erreur lors de la suppression du film" });
     }
