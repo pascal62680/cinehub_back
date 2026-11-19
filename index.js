@@ -23,6 +23,20 @@ app.get("/", (req, res) => {
     res.json({ status: "OK" });
 });
 
+// Aucune route ne correspond → 404 en JSON
+app.use((req, res) => {
+    res.status(404).json({ error: "Route introuvable" });
+});
+
+// Gestion des erreurs (ex : JSON mal formé) → réponse en JSON
+app.use((err, req, res, next) => {
+    if (err.type === "entity.parse.failed") {
+        return res.status(400).json({ error: "JSON invalide" });
+    }
+    res.status(500).json({ error: "Erreur serveur" });
+});
+
+
 const PORT = process.env.SERVER_PORT;
 
 app.listen(PORT, () => {
