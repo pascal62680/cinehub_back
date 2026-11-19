@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import "dotenv/config";
 import authRoutes from "./Routes/auth.route.js";
 import checkToken from "./Middlewares/auth.middleware.js";
@@ -11,6 +12,9 @@ import usersRoutes from "./Routes/users.route.js";
 
 
 const app = express();
+
+// Autorise le front React (Vite) à appeler l'API depuis le navigateur
+app.use(cors({ origin: "http://localhost:5173" }));
 
 app.use(express.json());
 app.use("/auth", authRoutes);
