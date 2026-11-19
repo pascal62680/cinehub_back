@@ -1,4 +1,7 @@
 import reservationsModel from "../Models/reservations.model.js";
+import screeningsModel from "../Models/screenings.model.js";
+import sendMail from "../Config/mailer.js";
+
 
 // Toutes les réservations (admin)
 async function getAll(req, res) {
@@ -72,6 +75,25 @@ async function create(req, res) {
 
         // 5. L'utilisateur vient du token, jamais du body
         const result = await reservationsModel.insert(req.user.us_id, screeningId, seats);
+        
+        // Bonus : e-mail de confirmation (un échec d'envoi n'annule pas la réservation)
+        try {
+            const details = await screeningsModel.getById(screeningId);
+            await sendMail(
+                req.user.us_email,
+                "CineHub - Confirmation de réservation",
+                `Bonjour ${req.user.us_username},\n\n` +
+                `Votre réservation est confirmée :\n` +
+                `- Film : ${details.fi_title}\n` +
+                `- Date : ${details.sc_datetime}\n` +
+                `- Salle : ${details.ro_name}\n` +
+                `- Places : ${seats}\n\n` +
+                `Bonne séance !\nL'équipe CineHub`
+            );
+        } catch (mailError) {
+            console.error("E-mail non envoyé :", mailError.message);
+        }
+
         res.status(201).json({ message: "Réservation créée", id: result.insertId });
     } catch (error) {
         // UNIQUE (re_user, re_screening) : déjà réservé
