@@ -59,6 +59,11 @@ async function create(req, res) {
             return res.status(404).json({ error: "Séance introuvable" });
         }
 
+        // Bonus : impossible de réserver une séance déjà passée
+        if (screening.is_past) {
+            return res.status(403).json({ error: "Impossible de réserver une séance déjà passée" });
+        }
+
         // 4. Contrôle des places
         const reserved = await reservationsModel.getReservedSeats(screeningId);
         if (reserved + seats > screening.ro_capacity) {

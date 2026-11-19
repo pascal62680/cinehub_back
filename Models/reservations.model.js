@@ -51,7 +51,8 @@ async function getById(id) {
 // Capacité de la salle d'une séance (undefined si la séance n'existe pas)
 async function getScreeningCapacity(screeningId) {
     const [rows] = await db.query(
-        `SELECT sc_id, ro_capacity
+                `SELECT sc_id, ro_capacity, sc_datetime < NOW() AS is_past
+
          FROM screenings
          JOIN rooms ON sc_room = ro_id
          WHERE sc_id = ?`,
