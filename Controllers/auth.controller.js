@@ -11,6 +11,11 @@ async function register(req, res) {
         if (!username || !email || !password) {
             return res.status(403).json({ error: "Champs obligatoires : username, email, password" });
         }
+                // Bonus : l'email doit avoir un format valide
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            return res.status(403).json({ error: "Email invalide" });
+        }
+
 
         const hash = bcrypt.hashSync(password, 10);
         const result = await usersModel.insert({ username, email, password: hash });

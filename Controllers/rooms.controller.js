@@ -34,6 +34,13 @@ async function create(req, res) {
             return res.status(403).json({ error: "Champs obligatoires : name, capacity" });
         }
 
+        // Bonus : capacité = nombre entier positif
+        if (!Number.isInteger(Number(room.capacity)) || Number(room.capacity) <= 0) {
+            return res.status(403).json({ error: "La capacité doit être un nombre entier positif" });
+        }
+
+
+
         const result = await roomsModel.insert(room);
         res.status(201).json({ message: "Salle créée", id: result.insertId });
     } catch (error) {
@@ -52,6 +59,11 @@ async function update(req, res) {
         }
 
         const body = req.body || {};
+
+        // Bonus : capacité = nombre entier positif
+        if (body.capacity !== undefined && (!Number.isInteger(Number(body.capacity)) || Number(body.capacity) <= 0)) {
+            return res.status(403).json({ error: "La capacité doit être un nombre entier positif" });
+        }
 
         const newRoom = {
             name: body.name ?? room.ro_name,

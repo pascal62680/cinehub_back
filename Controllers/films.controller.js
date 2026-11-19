@@ -39,6 +39,12 @@ async function create(req, res) {
         if (!film.title || !film.duration) {
             return res.status(403).json({ error: "Champs obligatoires : title, duration" });
         }
+        
+        // Bonus : durée = nombre entier positif (en minutes)
+        if (!Number.isInteger(Number(film.duration)) || Number(film.duration) <= 0) {
+            return res.status(403).json({ error: "La durée doit être un nombre entier positif" });
+        }
+
 
         const result = await filmsModel.insert(film);
         res.status(201).json({ message: "Film créé", id: result.insertId });
@@ -58,6 +64,11 @@ async function update(req, res) {
         }
 
         const body = req.body || {};
+
+        // Bonus : durée = nombre entier positif (en minutes)
+        if (body.duration !== undefined && (!Number.isInteger(Number(body.duration)) || Number(body.duration) <= 0)) {
+            return res.status(403).json({ error: "La durée doit être un nombre entier positif" });
+        }
 
         const newFilm = {
             title: body.title ?? film.fi_title,

@@ -51,6 +51,15 @@ async function create(req, res) {
         if (!screening.film || !screening.room || !screening.datetime || !screening.price) {
             return res.status(403).json({ error: "Champs obligatoires : film, room, datetime, price" });
         }
+        
+        // Bonus : prix positif et date valide
+        if (!(Number(screening.price) > 0)) {
+            return res.status(403).json({ error: "Le prix doit être un nombre positif" });
+        }
+        if (isNaN(Date.parse(screening.datetime))) {
+            return res.status(403).json({ error: "Date invalide (format attendu : AAAA-MM-JJ HH:MM:SS)" });
+        }
+
 
         // Le film et la salle doivent exister
         if (!(await filmsModel.getById(screening.film))) {
@@ -85,6 +94,16 @@ async function update(req, res) {
             datetime: body.datetime ?? screening.sc_datetime,
             price: body.price ?? screening.sc_price
         };
+
+        
+        // Bonus : prix positif et date valide
+        if (!(Number(newScreening.price) > 0)) {
+            return res.status(403).json({ error: "Le prix doit être un nombre positif" });
+        }
+        if (isNaN(Date.parse(newScreening.datetime))) {
+            return res.status(403).json({ error: "Date invalide (format attendu : AAAA-MM-JJ HH:MM:SS)" });
+        }
+
 
         // Si on change de film ou de salle, ils doivent exister
         if (!(await filmsModel.getById(newScreening.film))) {

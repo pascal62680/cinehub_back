@@ -60,6 +60,12 @@ async function update(req, res) {
 
         const body = req.body || {};
 
+                // Bonus : si un nouvel email est envoyé, il doit être valide
+        if (body.email !== undefined && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.email)) {
+            return res.status(403).json({ error: "Email invalide" });
+        }
+
+
         const newUser = {
             username: body.username ?? user.us_username,
             email: body.email ?? user.us_email
