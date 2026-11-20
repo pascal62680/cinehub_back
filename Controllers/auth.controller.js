@@ -22,6 +22,11 @@ async function register(req, res) {
 
         res.status(201).json({ message: "Inscription réussie", id: result.insertId });
     } catch (error) {
+                // Nom d'utilisateur ou e-mail déjà pris (contrainte UNIQUE)
+        if (error.code === "ER_DUP_ENTRY") {
+            return res.status(403).json({ error: "Nom d'utilisateur ou e-mail déjà utilisé" });
+        }
+
         res.status(500).json({ error: "Erreur lors de l'inscription" });
     }
 }
