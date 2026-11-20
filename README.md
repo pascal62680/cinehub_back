@@ -2,6 +2,8 @@
 
 API Node.js / Express / MySQL : films, salles, séances et réservations, sécurisée par JWT avec deux rôles (`user` et `admin`).
 
+Interface web React (bonus) : [cinehub_front](https://github.com/pascal62680/cinehub_front).
+
 ## Technologies
 Node.js (modules ES6), Express, MySQL (`mysql2/promise`), `bcrypt`, `jsonwebtoken`, `dotenv`, `nodemailer`, `nodemon`.
 
@@ -14,7 +16,7 @@ Node.js (modules ES6), Express, MySQL (`mysql2/promise`), `bcrypt`, `jsonwebtoke
    npm install
    ```
 2. Créer la base de données : exécuter `bdd.sql` avec un compte MySQL administrateur (root), par exemple dans MySQL Workbench (*File → Open SQL Script*, puis ⚡).
-   Le script crée la base `cinehub`, les 5 tables, l'utilisateur MySQL `cinehub` et des données de test.
+   Le script crée la base `cinehub`, les 5 tables, l'utilisateur MySQL `cine_user` (mot de passe `cinehub`, droits SELECT / INSERT / UPDATE / DELETE sur `cinehub` uniquement) et des données de test.
 3. Copier `.env.example` en `.env` et compléter les valeurs (`DB_PASSWORD`, `JWT_SECRET`…).
    Pour l'e-mail de confirmation (facultatif) : renseigner `SMTP_USER` et `SMTP_PASSWORD`. Avec Gmail, il faut un **mot de passe d'application** (16 caractères), pas le mot de passe du compte.
 

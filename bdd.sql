@@ -77,12 +77,12 @@ CREATE TABLE IF NOT EXISTS reservations (
 -- ---------------------------------------------------------------------
 -- Créé pour 'localhost' ET '127.0.0.1' : selon la configuration de MySQL,
 -- une connexion vers DB_HOST=127.0.0.1 peut être vue sous l'un ou l'autre nom.
-CREATE USER IF NOT EXISTS 'cinehub'@'localhost' IDENTIFIED BY 'cinehub';
-CREATE USER IF NOT EXISTS 'cinehub'@'127.0.0.1' IDENTIFIED BY 'cinehub';
+CREATE USER IF NOT EXISTS 'cine_user'@'localhost' IDENTIFIED BY 'cinehub';
+CREATE USER IF NOT EXISTS 'cine_user'@'127.0.0.1' IDENTIFIED BY 'cinehub';
 
 -- Droits limités au strict nécessaire, et uniquement sur la base cinehub
-GRANT SELECT, INSERT, UPDATE, DELETE ON cinehub.* TO 'cinehub'@'localhost';
-GRANT SELECT, INSERT, UPDATE, DELETE ON cinehub.* TO 'cinehub'@'127.0.0.1';
+GRANT SELECT, INSERT, UPDATE, DELETE ON cinehub.* TO 'cine_user'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON cinehub.* TO 'cine_user'@'127.0.0.1';
 
 FLUSH PRIVILEGES;
 
